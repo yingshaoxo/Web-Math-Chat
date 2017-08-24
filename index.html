@@ -118,6 +118,7 @@ i   <title>Math Chat</title>
 
         var chat = new chat_control();
         chat.receive_msg('yingshaoxo', 'This was made for you! \`2017/(520*1314)\`');
+        var ws = new WebSocket("ws://127.0.0.1:5678/");
 
         send_button = $('button') // get jquery element from html table name
         input_box = $('#input-box') // get jquery element from div id
@@ -132,10 +133,11 @@ i   <title>Math Chat</title>
         function send_msg() {
             msg = handle_msg(input_box.val());
             if (msg != '') {
+                ws.send(msg);
                 chat.send_msg('you', msg);
                 input_box.val('');
 
-                setTimeout(function(){ chat.receive_msg('yingshaoxo', 'I can hear you.'); }, 1000);
+                //setTimeout(function(){ chat.receive_msg('yingshaoxo', 'I can hear you.'); }, 1000);
                 MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
             }
         }
@@ -153,6 +155,12 @@ i   <title>Math Chat</title>
 
         send_button.on('click', send_msg.bind());
         input_box.on('keyup', box_key_pressing.bind());
+
+        ws.onmessage = function(event) {
+            chat.receive_msg('others', event.data);
+            MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+        };
+
     </script>
 
   </body>
