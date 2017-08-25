@@ -118,7 +118,7 @@ i   <title>Math Chat</title>
 
         var chat = new chat_control();
         chat.receive_msg('yingshaoxo', 'This was made for you! \`2017/(520*1314)\`');
-        var ws = new WebSocket("ws://127.0.0.1:5678/");
+        var ws = new WebSocket("ws://" + location.hostname + ":5678/");
 
         send_button = $('button') // get jquery element from html table name
         input_box = $('#input-box') // get jquery element from div id
