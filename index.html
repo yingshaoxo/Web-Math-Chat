@@ -5,8 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-i   <title>Math Chat</title>
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
   </head>
@@ -48,19 +46,14 @@ i   <title>Math Chat</title>
     	
                 <div class="msg-group center">
                 	
+                    {% for msg in msgs %}
                     <div class="card">
                          <div class="card-body">
-                             <h6 class="card-subtitle mb-2 text-muted text-left">yingshaoxo</h6>
-                             <p class="card-text float-left">Hi ~</p>
+                             <h6 class="card-subtitle mb-2 text-muted text-left">{{ msg["name"] }}</h6>
+                             <p class="card-text float-left">{{ msg["text"] }}</p>
                          </div>
                     </div>
-                      
-                    <div class="card">
-                         <div class="card-body">
-                             <h6 class="card-subtitle mb-2 text-muted text-right">yingshaoxo</h6>
-                             <p class="card-text float-right">Welcome to here!</p>
-                         </div>
-                    </div>                      
+                    {% endfor %}
                    
                 </div>
                 
@@ -117,7 +110,7 @@ i   <title>Math Chat</title>
 
 
         var chat = new chat_control();
-        chat.receive_msg('yingshaoxo', 'This was made for you! \`2017/(520*1314)\`');
+        chat.scroll_to_bottom();
         var ws = new WebSocket("ws://" + location.hostname + ":5678/");
 
         send_button = $('button') // get jquery element from html table name
@@ -161,6 +154,10 @@ i   <title>Math Chat</title>
             MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
         };
 
+        ws.onclose = function(event) {
+            //console.log('websocket connection has been closed');
+            window.location.reload();
+        };
     </script>
 
   </body>

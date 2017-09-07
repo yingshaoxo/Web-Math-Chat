@@ -6,9 +6,10 @@ RUN pip install --no-cache-dir -r /usr/src/app/requirements.txt
 COPY app.py /usr/src/app/
 COPY index.html /usr/src/app/
 COPY server.py /usr/src/app/
-COPY fuck_docker.py /usr/src/app/
+COPY run.sh /usr/src/app/
+RUN chmod +x /usr/src/app/run.sh
 
 EXPOSE 5000 
 EXPOSE 5678
 
-CMD ["python", "/usr/src/app/fuck_docker.py"]
+CMD ["bash", "/usr/src/app/run.sh"]
