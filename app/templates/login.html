@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>Log in/up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  </head>
+  <style>
+    .container{
+     text-align: center
+   }
+    .center{
+     text-align: center;
+     max-width: 540px;
+     margin-top: 15%;
+     margin-left: auto;
+     margin-right: auto;
+   }
+  </style>
+  <body>
+    <div class="container">
+      <form action="/login" method="post">
+       <table class="container center">
+        <tr><td><input class="form-control" type="text" placeholder="Username" name="username" value="{{
+          request.form.username }}"></td></tr>
+        <tr><td><input class="form-control" type="password" placeholder="Password" name="password" value="{{
+          request.form.password }}"></td></tr>
+        <tr><td>
+        <input class="btn btn-primary" type="submit" name="btn" value="Log in/up">
+        </td></tr>
+       </table>
+      </form>
+      {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}
+      {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+  </body>
+</html>

@@ -14,3 +14,11 @@ Docker: [yingshaoxo/mathchat](https://hub.docker.com/r/yingshaoxo/mathchat/)
 [websockets](https://github.com/aaugustin/websockets)
 
 [requests](https://github.com/requests/requests)
+
+[sqlalchemy](https://www.sqlalchemy.org)
+
+
+### Usage
+`pip3 install -r requirements.txt`
+
+`bash run.sh`

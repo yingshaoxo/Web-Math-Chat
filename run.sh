@@ -1,3 +1,3 @@
-pkill python
-python /usr/src/app/server.py &
-python /usr/src/app/app.py
+pkill python3.6
+python3.6 app/server.py &
+python3.6 app/app.py &

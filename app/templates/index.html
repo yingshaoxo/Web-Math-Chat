@@ -49,8 +49,8 @@
                     {% for msg in msgs %}
                     <div class="card">
                          <div class="card-body">
-                             <h6 class="card-subtitle mb-2 text-muted text-left">{{ msg["name"] }}</h6>
-                             <p class="card-text float-left">{{ msg["text"] }}</p>
+                             <h6 class="card-subtitle mb-2 text-muted text-{{ msg["side"] }}">{{ msg["name"] }}</h6>
+                             <p class="card-text float-{{ msg["side"] }}">{{ msg["text"] }}</p>
                          </div>
                     </div>
                     {% endfor %}
@@ -74,6 +74,7 @@
     <script type="text/javascript" async
       src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 
     <script>
         class chat_control {
@@ -81,22 +82,22 @@
                 this.msg_list = $('.msg-group');
             }
 
-            send_msg(name, msg) {
-                this.msg_list.append(this.get_msg_html(name, msg, 'right'));
+            send_msg(name, text) {
+                this.msg_list.append(this.get_msg_html(name, text, 'right'));
                 this.scroll_to_bottom(); 
             }
 
-            receive_msg(name, msg) {
-                this.msg_list.append(this.get_msg_html(name, msg, 'left'));
+            receive_msg(name, text) {
+                this.msg_list.append(this.get_msg_html(name, text, 'left'));
                 this.scroll_to_bottom(); 
             }
 
-            get_msg_html(name, msg, side) {
+            get_msg_html(name, text, side) {
                 var msg_temple = `
                     <div class="card">
                          <div class="card-body">
                              <h6 class="card-subtitle mb-2 text-muted text-${side}">${name}</h6>
-                             <p class="card-text float-${side}">${msg}</p>
+                             <p class="card-text float-${side}">${text}</p>
                          </div>
                     </div>
                     `;
@@ -109,25 +110,37 @@
         }
 
 
+        function get_user_info() {
+            var user = {};
+            user.name = Cookies.get('username');
+            user.token = Cookies.get('token');
+            return user;
+        }
+
+
         var chat = new chat_control();
         chat.scroll_to_bottom();
+
+        user = get_user_info()
         var ws = new WebSocket("ws://" + location.hostname + ":5678/");
 
         send_button = $('button') // get jquery element from html table name
         input_box = $('#input-box') // get jquery element from div id
         // also you could get it by $('.form-control') or $('textarea')
 
-        function handle_msg(msg) {
-            msg = msg.trim()
-            msg = msg.replace(/(?:\r\n|\r|\n)/g, '<br>')
-            return msg
+        function handle_text(text) {
+            text = text.trim();
+            text = text.replace(/(?:\r\n|\r|\n)/g, '<br>');
+            return text;
         }
 
         function send_msg() {
-            msg = handle_msg(input_box.val());
-            if (msg != '') {
-                ws.send(msg);
-                chat.send_msg('you', msg);
+            text = handle_text(input_box.val());
+            if (text != '') {
+                user.text = text
+                ws.send(JSON.stringify(user));
+
+                chat.send_msg(user.name, user.text);
                 input_box.val('');
 
                 //setTimeout(function(){ chat.receive_msg('yingshaoxo', 'I can hear you.'); }, 1000);
@@ -135,7 +148,7 @@
             }
         }
 
-        function box_key_pressing() {
+        function box_key_pressing(event) {
             // control + enter was pressed
             if ((event.keyCode === 10 || event.keyCode === 13) && event.ctrlKey) {
                 send_msg();
@@ -149,8 +162,14 @@
         send_button.on('click', send_msg.bind());
         input_box.on('keyup', box_key_pressing.bind());
 
+        ws.onopen = function() {
+            ws.send(JSON.stringify(user));
+        };
+
         ws.onmessage = function(event) {
-            chat.receive_msg('others', event.data);
+            user = JSON.parse(event.data)
+            chat.receive_msg(user.name, user.text);
+            
             MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
         };
 
