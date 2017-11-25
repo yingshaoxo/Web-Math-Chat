@@ -109,19 +109,10 @@
             }
         }
 
-
-        function get_user_info() {
-            var user = {};
-            user.name = Cookies.get('username');
-            user.token = Cookies.get('token');
-            return user;
-        }
-
-
+        
         var chat = new chat_control();
         chat.scroll_to_bottom();
 
-        user = get_user_info()
         var ws = new WebSocket("ws://" + location.hostname + ":5678/");
 
         send_button = $('button') // get jquery element from html table name
@@ -134,9 +125,17 @@
             return text;
         }
 
+        function get_user_info() {
+            var user = {};
+            user.name = Cookies.get('username');
+            user.token = Cookies.get('token');
+            return user;
+        }
+
         function send_msg() {
             text = handle_text(input_box.val());
             if (text != '') {
+                user = get_user_info()
                 user.text = text
                 ws.send(JSON.stringify(user));
 
@@ -161,10 +160,6 @@
 
         send_button.on('click', send_msg.bind());
         input_box.on('keyup', box_key_pressing.bind());
-
-        ws.onopen = function() {
-            ws.send(JSON.stringify(user));
-        };
 
         ws.onmessage = function(event) {
             user = JSON.parse(event.data)

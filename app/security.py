@@ -13,15 +13,13 @@ class Auth():
         else:
             return None
 
-    def set_token(self, id, *args):
+    def set_token(self, id):
         user = self.s.find_one(id)
         if user == None:
             return None
-        if len(args) == 1:
-            user.token = args[0]
         else:
             user.token = self.random_token()
-        self.s.commit()
-        return user.token
+            self.s.commit()
+            return user.token
         
         

@@ -28,10 +28,10 @@ def index():
                 msg['side'] = 'right'
             else:
                 msg['side'] = 'left'
+
         response = app.make_response(render_template('index.html', msgs=new_msgs))
-        session_token = request.cookies.get('session')
-        token = auth.set_token(username, session_token)
-        if token == None:
+        token = auth.set_token(username)
+        if token == None: 
             return redirect(url_for('login'))
         response.set_cookie('token', value=token)
         response.set_cookie('username', value=username)

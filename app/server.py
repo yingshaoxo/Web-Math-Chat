@@ -9,37 +9,31 @@ from security import Auth
 s = MySession()
 auth = Auth(s)
 
-connected = dict()
+connected = set()
 
 async def my_function(websocket, data):
     # print(data)
     user = json.loads(data)
 
-    my_struct = connected[websocket]
-    if my_struct['verified'] == False:
-        # print(auth.get_token(user['name']), '\n', user['token'])
-        if auth.get_token(user['name']) != user['token']:
-            websocket.handler_task.cancel()
-        else:
-            my_struct['verified'] = True
-            return
+    # print(auth.get_token(user['name']) +  '\n' + user['token'])
+    if auth.get_token(user['name']) != user['token']:
+        return 
 
     requests.post('http://0.0.0.0:5000/msg/', json={'name': user.get('name'), 'text': user.get('text')}) # /msg/ is diffrent one than /msg
 
-    for ws in connected.copy().keys():
+    for ws in connected.copy():
         if ws != websocket:
             try:
                 await ws.send(data)
             except:
                 # Unregister
-                connected.pop(ws)
-                my_struct['verified'] = False
+                connected.remove(ws)
 
 
 async def main_handler(websocket, path):
     # Register
     global connected
-    connected.update({websocket:{'username': None, 'verified': False}})
+    connected.add(websocket)
 
     while True:
         try:
