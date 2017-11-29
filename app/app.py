@@ -1,3 +1,5 @@
+import env
+
 from database import MySession
 from security import Auth
 s = MySession()
@@ -8,7 +10,7 @@ import json
 
 msgs = []
 app = Flask(__name__, static_url_path='', static_folder='', template_folder='templates')
-
+    
 @app.before_request
 def session_management(): 
     session.permanent = True
@@ -16,6 +18,7 @@ def session_management():
 @app.route('/')
 def index():
     # return app.send_static_file('index.html')
+    env.set()
     global msgs
 
     username = session.get('username')
@@ -80,4 +83,4 @@ def login():
 
 if __name__ == '__main__':
     app.secret_key = "Every day is a different day."
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

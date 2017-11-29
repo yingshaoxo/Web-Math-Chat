@@ -1,3 +1,6 @@
+import logging
+logging.basicConfig(filename='whatsup.log', level=logging.INFO)
+
 import asyncio
 import websockets
 
@@ -12,14 +15,15 @@ auth = Auth(s)
 connected = set()
 
 async def my_function(websocket, data):
-    # print(data)
+    logging.info(data)
     user = json.loads(data)
 
-    # print(auth.get_token(user['name']) +  '\n' + user['token'])
+    logging.info(auth.get_token(user['name']) +  '\n' + user['token'])
+    logging.info('\n'*3)
     if auth.get_token(user['name']) != user['token']:
         return 
 
-    requests.post('http://0.0.0.0:5000/msg/', json={'name': user.get('name'), 'text': user.get('text')}) # /msg/ is diffrent one than /msg
+    requests.post('http://127.0.0.1:5000/msg/', json={'name': user.get('name'), 'text': user.get('text')}) # /msg/ is diffrent one than /msg
 
     for ws in connected.copy():
         if ws != websocket:
