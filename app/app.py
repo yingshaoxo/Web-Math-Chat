@@ -10,7 +10,7 @@ from flask import Flask, url_for, redirect, request, render_template, session
 import json
 
 msgs = []
-app = Flask(__name__, static_url_path='', static_folder='', template_folder='templates')
+app = Flask(__name__, static_url_path='/static', static_folder='static', template_folder='templates')
     
 @app.before_request
 def session_management(): 
