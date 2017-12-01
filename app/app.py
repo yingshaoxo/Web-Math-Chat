@@ -1,4 +1,5 @@
-import env
+from env import App as Env
+env = Env()
 
 from database import MySession
 from security import Auth
@@ -18,7 +19,7 @@ def session_management():
 @app.route('/')
 def index():
     # return app.send_static_file('index.html')
-    env.set()
+    env.set_websokets_server()
     global msgs
 
     username = session.get('username')

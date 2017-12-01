@@ -1,5 +1,9 @@
+from env import Base as Env
+env = Env()
+
+import os
 import logging
-logging.basicConfig(filename='whatsup.log', level=logging.INFO)
+logging.basicConfig(filename=os.path.join(env.project_path, 'whatsup.log'), level=logging.INFO)
 
 import asyncio
 import websockets
@@ -15,11 +19,10 @@ auth = Auth(s)
 connected = set()
 
 async def my_function(websocket, data):
-    logging.info(data)
+    logging.info('\n' + data + '\n')
     user = json.loads(data)
 
-    logging.info(auth.get_token(user['name']) +  '\n' + user['token'])
-    logging.info('\n'*3)
+    logging.info('\n' + auth.get_token(user['name']) + '\n' + user['token'] + '\n'*3)
     if auth.get_token(user['name']) != user['token']:
         return 
 

@@ -1,5 +1,9 @@
 from pprint import pprint
 
+
+import os
+
+print(os.path.abspath(os.path.join(__file__, "../../")))
 '''
 import websockets
 import asyncio

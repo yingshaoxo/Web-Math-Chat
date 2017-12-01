@@ -1,3 +1,6 @@
+from env import Database as Env 
+env = Env()
+
 # https://docs.sqlalchemy.org/en/latest/orm/tutorial.html
 # https://bytefish.de/blog/first_steps_with_sqlalchemy/
 from pprint import pprint
@@ -11,7 +14,7 @@ from sqlalchemy import Column, DateTime, Integer, String
 from sqlalchemy.orm import sessionmaker
 
 
-engine = create_engine('sqlite:///{dir}/userdata.sqlite'.format(dir=os.path.abspath(os.path.dirname(__file__)))) # sql name can not contain any _ stuff, or exception be raised
+engine = create_engine('sqlite:///{dir}/userdata.sqlite'.format(dir=env.userdata_folder)) # sql name can not contain any _ stuff, or exception be raised
 Base = declarative_base()
 
 class User(Base):
