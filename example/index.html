@@ -140,7 +140,7 @@ i   <title>Math Chat</title>
             }
         }
 
-        function box_key_pressing() {
+        function box_key_pressing(event) {
             // control + enter was pressed
             if ((event.keyCode === 10 || event.keyCode === 13) && event.ctrlKey) {
                 send_msg();
