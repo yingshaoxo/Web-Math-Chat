@@ -3,7 +3,7 @@ A math chat web app based on Python3.
 
 
 ### Demo
-Online: [Web Math Chat](https://mathchat.ml)
+Online: [Web Math Chat (mathchat.ml)](https://mathchat.ml)
 
 Web UI: [Web Chat UI With MathJax](http://bootsnipp.com/snippets/X27Wp)
 
