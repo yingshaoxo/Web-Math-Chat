@@ -49,7 +49,7 @@ async def main_handler(websocket, path):
         except RuntimeError as e:
             print(e)
 
-start_server = websockets.serve(main_handler, '0.0.0.0', 5678)
+start_server = websockets.serve(main_handler, '0.0.0.0', 5277)
 
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()

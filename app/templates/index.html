@@ -115,7 +115,11 @@
         var chat = new chat_control();
         chat.scroll_to_bottom();
 
-        var ws = new WebSocket("ws://" + location.hostname + ":5678/");
+        var ws_link = 'ws://' + location.hostname + ":5277/";
+        if (window.location.protocol === 'https:') {
+            ws_link = 'wss://' + location.hostname + ":5678/";
+        }
+        var ws = new WebSocket(ws_link);
 
         send_button = $('button') // get jquery element from html table name
         input_box = $('#input-box') // get jquery element from div id

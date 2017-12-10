@@ -1,9 +1,11 @@
 from pprint import pprint
+from env import App
+
+env = App()
+print(env.run_command('uname -a'))
 
 
-import os
 
-print(os.path.abspath(os.path.join(__file__, "../../")))
 '''
 import websockets
 import asyncio
