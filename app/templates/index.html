@@ -84,12 +84,20 @@
                 this.msg_list = $('.msg-group');
             }
 
+            handle_text(text) {
+                text = text.trim();
+                text = text.replace(/(?:\r\n|\r|\n)/g, '<br>');
+                return text;
+            }
+
             send_msg(name, text) {
+                text = this.handle_text(text);
                 this.msg_list.append(this.get_msg_html(name, text, 'right'));
                 this.scroll_to_bottom(); 
             }
 
             receive_msg(name, text) {
+                text = this.handle_text(text);
                 this.msg_list.append(this.get_msg_html(name, text, 'left'));
                 this.scroll_to_bottom(); 
             }
@@ -125,12 +133,6 @@
         input_box = $('#input-box') // get jquery element from div id
         // also you could get it by $('.form-control') or $('textarea')
 
-        function handle_text(text) {
-            text = text.trim();
-            text = text.replace(/(?:\r\n|\r|\n)/g, '<br>');
-            return text;
-        }
-
         function get_user_info() {
             var user = {};
             user.name = Cookies.get('username');
@@ -139,7 +141,7 @@
         }
 
         function send_msg() {
-            text = handle_text(input_box.val());
+            text = input_box.val().trim();
             if (text != '') {
                 user = get_user_info()
                 user.text = text
@@ -154,6 +156,11 @@
         }
 
         function box_key_pressing(event) {
+            // control + c was pressed
+            if ((event.keyCode === 10 || event.keyCode === 67) && event.ctrlKey) {
+                input_box.val(input_box.val() + `\\text{}`);
+            }
+
             // control + enter was pressed
             if ((event.keyCode === 10 || event.keyCode === 13) && event.ctrlKey) {
                 send_msg();

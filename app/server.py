@@ -27,6 +27,7 @@ async def my_function(websocket, data):
         return 
 
     requests.post('http://127.0.0.1:5000/msg/', json={'name': user.get('name'), 'text': user.get('text')}) # /msg/ is diffrent one than /msg
+    logging.info('\n' + user.get('text'))
 
     for ws in connected.copy():
         if ws != websocket:
