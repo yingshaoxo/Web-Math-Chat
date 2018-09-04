@@ -1,5 +1,10 @@
+import './styles.scss';
+
+import $ from "jquery";
+import popper from "popper.js";
+import bootstrap from "bootstrap";
+
 //jquery need to be load after document been loaded
-//$ = require("jquery")
 window.$ = require("jquery")
 
 $(document).ready( () => {
@@ -40,8 +45,8 @@ $(document).ready( () => {
     var chat = new chat_control();
     chat.receive_msg('yingshaoxo', 'This was made for you! \`2017/(520*1314)\`');
 
-    send_button = $('button') // get jquery element from html table name
-    input_box = $('#input-box') // get jquery element from div id
+    const send_button = $('button') // get jquery element from html table name
+    const input_box = $('#input-box') // get jquery element from div id
     // also you could get it by $('.form-control') or $('textarea')
 
     function handle_msg(msg) {
@@ -51,7 +56,7 @@ $(document).ready( () => {
     }
 
     function send_msg() {
-        msg = handle_msg(input_box.val());
+        let msg = handle_msg(input_box.val());
         if (msg != '') {
             chat.send_msg('you', msg);
             input_box.val('');

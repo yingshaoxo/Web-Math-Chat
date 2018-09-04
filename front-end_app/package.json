@@ -1,12 +1,12 @@
 {
     "name": "WebMathChat",
     "version": "1.0.0",
-    "main": "./src/index.js",
+    "main": ".",
     "author": "yingshaoxo",
     "license": "MIT",
     "scripts": {
         "start": "cross-env NODE_ENV=development parcel serve ./index.html --no-hmr --open --out-dir build",
-        "build": "cross-env NODE_ENV=production parcel build ./index.html --public-url ./src --out-dir build"
+        "build": "cross-env NODE_ENV=production parcel build ./index.html --public-url ./ --out-dir build"
     },
     "devDependencies": {
         "babel-plugin-transform-runtime": "~6.23.0",
@@ -14,6 +14,7 @@
         "babel-preset-env": "~1.6.1",
         "clang-format": "~1.2.2",
         "cross-env": "^5.1.6",
+        "node-sass": "^4.9.3",
         "parcel-bundler": "~1.8.1"
     },
     "browserslist": [
@@ -23,6 +24,8 @@
         "android >= 6"
     ],
     "dependencies": {
-        "jquery": "^3.3.1"
+        "bootstrap": "^4.1.3",
+        "jquery": "^3.3.1",
+        "popper.js": "^1.14.4"
     }
 }
