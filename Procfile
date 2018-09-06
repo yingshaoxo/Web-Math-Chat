@@ -1,1 +1,1 @@
-web: gunicorn RESTful_server/main:app
+web: python RESTful_server/main.py

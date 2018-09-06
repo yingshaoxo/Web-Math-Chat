@@ -29,4 +29,4 @@ def handle_data(message): # data could be anything, json or text
     emit('message_receiver_on_client', message, broadcast=True, include_self=False) # when broadcast=True, it'll send a message to everyone except current socket
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    socketio.run(app, host='0.0.0.0', port='5000', debug=True)
