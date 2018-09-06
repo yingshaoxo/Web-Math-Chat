@@ -1,9 +1,10 @@
 # Pipfile
 
 [requires]
-python_version = "3.6"
+python_version = "3.7.0"
 
 [packages]
 flask-socketio = "*"
 Flask = "*"
-gunicorn = "*"
+gevent = "*"
+gevent-websocket = "*"
