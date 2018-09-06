@@ -1,7 +1,14 @@
 # Web-Math-Chat
-A math chat web app based on react.js and flask.
+A simple real time math chat web app built on `parcel`, `bootstript` and `flask`.
 
-### Env
+### Python Env
 ```
+cd RESTful_server
 sudo pip3 install -r requirements.txt
+```
+
+### Javascript Env
+```
+cd front-end_app
+yarn
 ```
