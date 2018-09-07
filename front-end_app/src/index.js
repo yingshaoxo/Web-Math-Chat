@@ -43,7 +43,7 @@ class chat_control {
 
 let username = Cookies.get('username') 
 $("#save-name").on('click', (() => {
-    Cookies.set("username", $("#name-box").val().trim())
+    Cookies.set("username", $("#name-box").val().trim(), { expires: 30 })
     $("#myModal").modal("hide")
     username = Cookies.get('username') 
 }).bind());
@@ -58,35 +58,25 @@ socket.on('connect', function() {
     socket.emit('you have total control about this text for identifying tunnel name', {data: 'I\'m connected!'});
 });
 
-if (username == undefined) {
-    socket.on('you have total control about this text for identifying tunnel name', (data) => {
-        console.log(data)
-        const json_obj = JSON.parse(data)
-        if (json_obj.length != 0) {
-            $('.card').remove()
-        }
-        json_obj.forEach((msg) => {
+socket.on('you have total control about this text for identifying tunnel name', (data) => {
+    console.log(data)
+    const json_obj = JSON.parse(data)
+    if (json_obj.length != 0) {
+        $('.card').remove()
+    }
+    json_obj.forEach((msg) => {
+        if (username == undefined) {
             chat.receive_msg(msg.username, msg.text)
-        })
-    })
-}
-else {
-    socket.on('you have total control about this text for identifying tunnel name', (data) => {
-        console.log(data)
-        const json_obj = JSON.parse(data)
-        if (json_obj.length != 0) {
-            $('.card').remove()
-        }
-        json_obj.forEach((msg) => {
+        } else {
             if (msg.username == username) {
                 chat.send_msg('you', msg.text)
             }
             else {
                 chat.receive_msg(msg.username, msg.text)
             }
-        })
+        }
     })
-} 
+})
 
 
 chat.receive_msg('yingshaoxo', 'This was made for you! \`2018/(520*1314)\`');

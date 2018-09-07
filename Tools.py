@@ -47,6 +47,7 @@ twine upload dist/*
 
     def __clear(self):
         commands = """
+sudo rm -fr msgs.json
 sudo rm -fr dist
 sudo rm -fr build
 sudo rm -fr test.py
