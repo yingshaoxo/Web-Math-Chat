@@ -54,15 +54,29 @@ var chat = new chat_control();
 
 var socket = io(location.protocol + '//' + document.domain + ':' + location.port);
 
-if (username != undefined) {
-    socket.on('connect', function() {
-        socket.emit('you have total control about this text for identifying tunnel name', {data: 'I\'m connected!'});
-    });
+socket.on('connect', function() {
+    socket.emit('you have total control about this text for identifying tunnel name', {data: 'I\'m connected!'});
+});
 
+if (username == undefined) {
     socket.on('you have total control about this text for identifying tunnel name', (data) => {
         console.log(data)
         const json_obj = JSON.parse(data)
-        $('.card').remove()
+        if (json_obj.length != 0) {
+            $('.card').remove()
+        }
+        json_obj.forEach((msg) => {
+            chat.receive_msg(msg.username, msg.text)
+        })
+    })
+}
+else {
+    socket.on('you have total control about this text for identifying tunnel name', (data) => {
+        console.log(data)
+        const json_obj = JSON.parse(data)
+        if (json_obj.length != 0) {
+            $('.card').remove()
+        }
         json_obj.forEach((msg) => {
             if (msg.username == username) {
                 chat.send_msg('you', msg.text)
@@ -72,7 +86,7 @@ if (username != undefined) {
             }
         })
     })
-}
+} 
 
 
 chat.receive_msg('yingshaoxo', 'This was made for you! \`2018/(520*1314)\`');
@@ -118,10 +132,10 @@ function send_msg() {
             input_box.val('');
 
             MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+
+            auto_growing();
         }
     }
-
-    auto_growing();
 }
 
 $.fn.selectRange = function(start, end) {
@@ -178,4 +192,5 @@ socket.on('message_receiver_on_client', (data) => {
     console.log(data)
     const json_obj = JSON.parse(data)
     chat.receive_msg(json_obj.username, json_obj.text);
+    MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 })

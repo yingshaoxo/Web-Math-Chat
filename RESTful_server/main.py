@@ -1,6 +1,9 @@
 import json
 import os 
 
+from auto_everything.base import IO
+io = IO()
+
 from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
     
@@ -10,6 +13,9 @@ app.config['SECRET_KEY'] = 'yingshaoxo is the king'
 socketio = SocketIO(app)
 
 msgs = []
+temp_json_file = "msgs.json"
+if not os.path.exists(temp_json_file):
+    io.write(temp_json_file, json.dumps([]))
 
 @app.route('/')
 def index():
@@ -17,16 +23,19 @@ def index():
 
 @socketio.on("you have total control about this text for identifying tunnel name")
 def handle_data(message):
-    global msgs
-    msgs = msgs[-10:]
-    print(message)
+    msgs = json.loads(io.read(temp_json_file))
+
     emit('you have total control about this text for identifying tunnel name', json.dumps(msgs)) # send historical msgs to new connector
 
 @socketio.on('message_receiver_on_server')
 def handle_data(message): # data could be anything, json or text
-    global msgs
     print(message)
+
+    global msgs
     msgs.append(json.loads(message))
+    msgs = msgs[-10:]
+    io.write(temp_json_file, json.dumps(msgs))
+
     emit('message_receiver_on_client', message, broadcast=True, include_self=False) # when broadcast=True, it'll send a message to everyone except current socket
 
 if __name__ == '__main__':
