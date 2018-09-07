@@ -80,6 +80,24 @@ chat.receive_msg('yingshaoxo', 'This was made for you! \`2018/(520*1314)\`');
 const send_button = $('#send-button') // get jquery element from html table name
 const input_box = $('#input-box') // get jquery element from div id
 
+const inputField = input_box.get(0) 
+const sendField = send_button.get(0)
+const input_box_css = inputField.style.cssText
+const send_button_css = sendField.style.cssText
+function auto_growing() {
+    if (inputField.scrollHeight > inputField.clientHeight) {
+        inputField.style.height = inputField.scrollHeight + "px";
+        sendField.style.height = inputField.style.height
+    } else {
+        inputField.style.cssText = "height:auto; bottom:0"
+        //sendField.style.cssText = 'height:auto; bottom:0';
+    }
+    if (input_box.val() == "") {
+        inputField.style.cssText = input_box_css;
+        sendField.style.cssText = send_button_css;
+    }
+}
+
 function handle_msg(msg) {
     msg = msg.trim()
     msg = msg.replace(/(?:\r\n|\r|\n)/g, '<br>')
@@ -102,6 +120,8 @@ function send_msg() {
             MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
         }
     }
+
+    auto_growing();
 }
 
 $.fn.selectRange = function(start, end) {
@@ -124,7 +144,10 @@ $.fn.selectRange = function(start, end) {
     });
 };
 
-function box_key_pressing(event) {
+function box_key_pressing(event) { 
+    // auto growing
+    auto_growing();
+
     // control + m was pressed
     if ((event.keyCode === 10 || event.keyCode === 77) && event.ctrlKey) {
         input_box.val(String.raw`
@@ -149,19 +172,6 @@ $$
 
 send_button.on('click', send_msg.bind());
 input_box.on('keyup', box_key_pressing.bind());
-
-function autosize(){
-  var el = this;
-  setTimeout(function(){
-    el.style.cssText = 'height:auto; padding:0';
-    el.style.cssText = 'height:' + el.scrollHeight + 'px';
-
-    send_button.get(0).style.cssText = 'height:auto; padding:0';
-    send_button.get(0).style.cssText = 'height:' + el.scrollHeight + 'px';
-  },0);
-}
-
-input_box.on('keydown', autosize);
 
 
 socket.on('message_receiver_on_client', (data) => {
