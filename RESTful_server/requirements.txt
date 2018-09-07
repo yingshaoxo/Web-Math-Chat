@@ -1,3 +1,4 @@
 flask
 flask-socketio
-auto_everything
+gevent
+gevent-websocket

@@ -62,7 +62,7 @@ if (username != undefined) {
     socket.on('you have total control about this text for identifying tunnel name', (data) => {
         console.log(data)
         const json_obj = JSON.parse(data)
-        console.log(json_obj)
+        $('.card').remove()
         json_obj.forEach((msg) => {
             if (msg.username == username) {
                 chat.send_msg('you', msg.text)
