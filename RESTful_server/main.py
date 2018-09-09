@@ -23,6 +23,7 @@ def index():
 
 @socketio.on("you have total control about this text for identifying tunnel name")
 def handle_data(message):
+    global msgs
     msgs = json.loads(io.read(temp_json_file))
 
     emit('you have total control about this text for identifying tunnel name', json.dumps(msgs)) # send historical msgs to new connector
