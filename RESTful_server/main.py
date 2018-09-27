@@ -4,7 +4,7 @@ import os
 from auto_everything.base import IO
 io = IO()
 
-from flask import Flask, render_template
+from flask import Flask, render_template,redirect
 from flask_socketio import SocketIO, emit
     
 # make sure static folder is the react build folder, and static path is the root, so static_url_path = ''
@@ -20,6 +20,11 @@ if not os.path.exists(temp_json_file):
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.errorhandler(404)
+def page_not_found(e):
+    print(e)
+    return redirect("/")
 
 @socketio.on("you have total control about this text for identifying tunnel name")
 def handle_data(message):
