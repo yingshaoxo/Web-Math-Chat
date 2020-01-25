@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  mathchat:
+    image: yingshaoxo/mathchat
+    ports:
+      - "5000:5000"
+      - "5277:5277"
+    volumes:
+      - ~/.mathchat:/root/mathchat:rw
+    restart: always

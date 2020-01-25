@@ -1,3 +1,6 @@
+import sys
+from engineio.async_drivers import gevent
+
 import json
 import os 
 
@@ -6,14 +9,23 @@ io = IO()
 
 from flask import Flask, render_template,redirect
 from flask_socketio import SocketIO, emit
+
+def resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
     
 # make sure static folder is the react build folder, and static path is the root, so static_url_path = ''
-app = Flask(__name__, template_folder='../front-end_app/build', static_url_path='', static_folder='../front-end_app/build')
+app = Flask(__name__, template_folder=resource_path('./front-end_app/build'), static_url_path='', static_folder=resource_path('./front-end_app/build'))
 app.config['SECRET_KEY'] = 'yingshaoxo is the king'
 socketio = SocketIO(app)
 
 msgs = []
-temp_json_file = "msgs.json"
+#data_folder = os.path.expanduser("~/.mathchat")
+data_folder = "/root/mathchat"
+temp_json_file = os.path.join(data_folder, "msgs.json")
+if not os.path.exists(data_folder):
+    os.mkdir(data_folder)
 if not os.path.exists(temp_json_file):
     io.write(temp_json_file, json.dumps([]))
 
