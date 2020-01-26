@@ -1,0 +1,11 @@
+# Pipfile	
+
+[requires]	
+python_version = "3.7.0"	
+
+[packages]	
+flask-socketio = "*"	
+Flask = "*"	
+gevent = "*"	
+gevent-websocket = "*"	
+auto-everything = "*"
