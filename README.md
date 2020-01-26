@@ -30,6 +30,17 @@ Make sure your server `Cross-Origin Controls` is set to `'*'` to allow Cross-Ori
 
 For `flask-socketio`, is to use `flask_socketio.SocketIO(app, cors_allowed_origins = '*')`
 
+#### With Cloudflare
+At the SSL/TLS tab:
+
+* If you have your own `cert` or `SSL` or `HTTPS`: set it to `Full`. (So the Cloudflare will use your own https certification)
+
+* If you only have an `http server`: set it to `Flexible`.  (So the Cloudflare will add `https` or `ssl` to your website automatically)
+
+* After that, go to DNS tab, set `Proxied`. (So the Cloudflare will start to work)
+
+> If you are not sure what you are doing, just go to DNS tab, set `DNS only`. (In this way, the cloudflare won't become a problem for you)
+
 #### For Nginx
 ```
 server {
