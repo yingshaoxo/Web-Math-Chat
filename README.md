@@ -25,8 +25,8 @@ yarn
 ```
 
 ### Reverse-Proxy configuration for HTTPS
-#### Before you do anything
-**Make sure your server `Cross-Origin Controls` is set to `'*'` to allow Cross-Origin Access**
+#### Important!
+Make sure your server `Cross-Origin Controls` is set to `'*'` to allow Cross-Origin Access
 
 For `flask-socketio`, is to use `flask_socketio.SocketIO(app, cors_allowed_origins = '*')`
 
