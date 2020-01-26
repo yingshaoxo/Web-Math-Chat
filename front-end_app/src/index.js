@@ -52,7 +52,7 @@ $("#save-name").on('click', (() => {
 var chat = new chat_control();
 
 
-var socket = io(location.protocol + '//' + document.domain + ':' + location.port);
+let socket = io(location.protocol + '//' + document.domain + ':' + location.port);
 
 socket.on('connect', function() {
     socket.emit('you have total control about this text for identifying tunnel name', {data: 'I\'m connected!'});

@@ -18,7 +18,7 @@ def resource_path(relative_path):
 # make sure static folder is the react build folder, and static path is the root, so static_url_path = ''
 app = Flask(__name__, template_folder=resource_path('./front-end_app/build'), static_url_path='', static_folder=resource_path('./front-end_app/build'))
 app.config['SECRET_KEY'] = 'yingshaoxo is the king'
-socketio = SocketIO(app)
+socketio = SocketIO(app, cors_allowed_origins='*')
 
 msgs = []
 #data_folder = os.path.expanduser("~/.mathchat")
