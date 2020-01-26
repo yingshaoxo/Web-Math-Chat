@@ -25,7 +25,10 @@ msgs = []
 data_folder = "/root/mathchat"
 temp_json_file = os.path.join(data_folder, "msgs.json")
 if not os.path.exists(data_folder):
-    os.mkdir(data_folder)
+    try:
+        os.mkdir(data_folder)
+    except Exception as e:
+        temp_json_file = "msgs.json"
 if not os.path.exists(temp_json_file):
     io.write(temp_json_file, json.dumps([]))
 
