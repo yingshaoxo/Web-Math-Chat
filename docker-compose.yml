@@ -7,4 +7,4 @@ services:
       - "5000:5000"
     volumes:
       - ~/.mathchat:/root/mathchat:rw
-    restart: always
+    restart: unless-stopped

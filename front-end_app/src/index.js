@@ -23,6 +23,10 @@ class chat_control {
         this.scroll_to_bottom(); 
     }
 
+    no_script(html_code) {
+        return html_code.replace("<script>", "&lt;script&gt;").replace("</script>", "&lt;&#47;script&gt;")
+    }
+
     get_msg_html(name, msg, side) {
         var msg_temple = `
             <div class="card">
@@ -32,7 +36,7 @@ class chat_control {
                  </div>
             </div>
             `;
-        return msg_temple;
+        return this.no_script(msg_temple);
     }
 
     scroll_to_bottom() {
